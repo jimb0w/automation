@@ -100,7 +100,7 @@ cd /home/jimb0w/Downloads/tempauto/
 clear
 set obs 20000
 set seed 1312
-gen sex = runiform(0,1)
+gen sex = runiformint(0,1)
 gen age = rnormal(60,15)
 gen diabetes = runiformint(0,1)
 gen smoking = runiformint(0,1)
@@ -213,14 +213,32 @@ Outcome & median (IQR) & median (IQR) & median (IQR) \\
 Data are presented as N (\%) or median (IQR).
 \end{table}
 
+Now that we know what we are aiming for, we need to collect the values. 
+Stata's \emph{return list} command is useful here: it tells you what
+is stored in Stata's memory, and thus how we can access it.
+For example:
+
 \color{Blue4}
 ***/
 
-texdoc stlog, cmdlog nodo
+texdoc stlog
 use randomhealthdata, clear
-
-
+su(ldl), detail
+return list
 texdoc stlog close
+
+
+/***
+\color{black}
+
+We can access any one of those statistics and store it for use in our table. 
+(Annoyingly ``tabulate'' doesn't store anything useful, so you have to use the \emph{matcell} option.)
+
+So, let's get all the data we need for our table:
+
+\color{Blue4}
+***/
+
 
 
 reg outcome age diabetes smoking ldl
