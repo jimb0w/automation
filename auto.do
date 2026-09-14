@@ -62,8 +62,6 @@ https://github.com/jimb0w/automation \\
 
 
 \noindent
-Correspondence to: \\
-\noindent
 Jedidiah Morton \\
 \color{blue}
 \href{mailto:Jedidiah.Morton@Monash.edu}{Jedidiah.Morton@monash.edu} \\ 
@@ -80,11 +78,9 @@ Monash University, Melbourne, Australia \\
 \clearpage
 \section{Data cleaning}
 
-Document everything.
+Document everything! Say what you're going to do, do it, then comment on it.
 
-Say what you're going to do, do it, then comment on it.
-
-I'm going to create a random health dataset with the following variables:
+For example: I'm going to create a random health dataset with the following variables:
 \begin{itemize}
 \item Sex (0 $=$ female; 1 $=$ male)
 \item Age (in years)
@@ -111,6 +107,7 @@ gen smoking = runiformint(0,1)
 gen ldl = rnormal(3,0.5)
 gen outcome = rnormal(200,30)+diabetes*rnormal(100,20)
 export delimited using randomhealthdata.csv, replace
+save randomhealthdata, replace
 texdoc stlog close
 
 /***
@@ -134,7 +131,6 @@ texdoc stlog close
 \color{black}
 
 It looks like these variables make sense and there don't appear to be any errors with the data.
-
 But we should check further: let's produce a histogram to check the continuous variables.
 The code below produces Figure~\ref{distcheck}.
 
@@ -163,6 +159,7 @@ texdoc stlog close
 /***
 \color{black}
 \clearpage
+\thispagestyle{empty}
 
 \begin{figure}[h!]
     \centering
@@ -171,9 +168,59 @@ texdoc stlog close
     \label{distcheck}
 \end{figure}
 
-\color{Blue4}
+\clearpage
+It appears that our age and LDL-C variables are normally distirbuted and seem reasonable. 
+there is an odd, bimodal distribution in the outcome variable.
 
+In terms of automation, the key thing here was producing my Figures using
+code, rather than a graphics program, and automatically exporting them to pdf,
+before importing them and displaying them within the document.
+Notice also that Figure~\ref{distcheck} hyperlinks to the figure if referenced
+properly, so if you update the figure order later, you don't have to re-number
+all your figure references in the text.
+That means if you change anything in your analysis, add a figure, etc., you don't need
+to re-make the figure, just re-run the code and it will re-appear updated in this pdf file.
+
+\clearpage
+\section{Analysis}
+
+Before beginning our analysis, we should present a summary table of population characteristics.
+We are most interested in diabetes, so we intend to stratify this table by diabetes type.
+
+Here, we are going to collect the results from the Stata output 
+and store them in a matrix, before saving that matrix to the Stata
+dataset editor and formatting the outputs for presentation in a Table.
+It helps to first think about the Table you want to present before
+collecting the results. 
+The Table~\ref{exampletable} is what we're aiming for.
+
+\begin{table}[h!]
+\centering
+    \caption{Table we are aiming for.}
+    \label{exampletable}
+	\begin{tabular}{lrrr}
+\hline
+& \multicolumn{1}{c}{Overall} & \multicolumn{2}{c}{Diabetes status} \\
+Outcome & & No diabetes & Diabetes \\
+\hline
+Sex & N (\%) & N (\%) & N (\%) \\
+Smoking status & N (\%) & N (\%) & N (\%) \\
+Age & median (IQR) & median (IQR) & median (IQR) \\
+LDL-C & median (IQR) & median (IQR) & median (IQR) \\
+Outcome & median (IQR) & median (IQR) & median (IQR) \\
+\hline
+\end{tabular}
+Data are presented as N (\%) or median (IQR).
+\end{table}
+
+\color{Blue4}
 ***/
+
+texdoc stlog, cmdlog nodo
+use randomhealthdata, clear
+
+
+texdoc stlog close
 
 
 reg outcome age diabetes smoking ldl
