@@ -110,6 +110,7 @@ gen diabetes = runiformint(0,1)
 gen smoking = runiformint(0,1)
 gen ldl = rnormal(3,0.5)
 gen outcome = rnormal(200,30)+diabetes*rnormal(100,20)
+export delimited using randomhealthdata.csv, replace
 texdoc stlog close
 
 /***
@@ -134,17 +135,45 @@ texdoc stlog close
 
 It looks like these variables make sense and there don't appear to be any errors with the data.
 
-But we should check further: let's produce a histogram to check the continuous variables. 
+But we should check further: let's produce a histogram to check the continuous variables.
+The code below produces Figure~\ref{distcheck}.
 
 \color{Blue4}
 ***/
 
 texdoc stlog, cmdlog nodo
-hist ldl
-hist age
-hist outcome
-export delimited using randomhealthdata.csv, replace
+mkdir GPH
+hist ldl, frequency ///
+xtitle("LDL-C (mmol/L)")
+graph save GPH/LDL_hist, replace
+hist age, frequency ///
+xtitle("Age (years)")
+graph save GPH/Age_hist, replace
+hist outcome, frequency ///
+xtitle("Outcome (units)")
+graph save GPH/Outcome_hist, replace
+graph combine ///
+GPH/LDL_hist.gph ///
+GPH/Age_hist.gph ///
+GPH/Outcome_hist.gph ///
+, cols(1) altshrink xsize(3)
+graph export GPH/distcheck.pdf, as(pdf) replace
 texdoc stlog close
+
+/***
+\color{black}
+\clearpage
+
+\begin{figure}[h!]
+    \centering
+    \caption{Histograms of LDL-C, Age, and outcome.}
+    \includegraphics[width=\textwidth]{GPH/distcheck.pdf}
+    \label{distcheck}
+\end{figure}
+
+\color{Blue4}
+
+***/
 
 
 reg outcome age diabetes smoking ldl
