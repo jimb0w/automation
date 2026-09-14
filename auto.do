@@ -54,7 +54,7 @@ texdoc stlog close
 \color{black}
 \thedate \\
 \color{blue}
-https://github.com/jimb0w/ \\
+https://github.com/jimb0w/automation \\
 \color{black}
        \vfill
     \end{flushright}
@@ -82,15 +82,72 @@ Monash University, Melbourne, Australia \\
 
 Document everything.
 
+Say what you're going to do, do it, then comment on it.
+
+I'm going to create a random health dataset with the following variables:
+\begin{itemize}
+\item Sex (0 $=$ female; 1 $=$ male)
+\item Age (in years)
+\item Diabetes status (0 $=$ no diabetes; 1 $=$ diabetes)
+\item Smoking status (0 $=$ non-smoker; 1 $=$ smoker)
+\item LDL-C (in mmol/L)
+\item Outcome (in outcome units)
+\end{itemize}
+
+As so:
+
+\color{Blue4}
+***/
+
+texdoc stlog, cmdlog
+cd /home/jimb0w/Downloads/tempauto/
+clear
+set obs 20000
+set seed 1312
+gen sex = runiform(0,1)
+gen age = rnormal(60,15)
+gen diabetes = runiformint(0,1)
+gen smoking = runiformint(0,1)
+gen ldl = rnormal(3,0.5)
+gen outcome = rnormal(200,30)+diabetes*rnormal(100,20)
+texdoc stlog close
+
+/***
+\color{black}
+
+Now I'm going to check the variables make sense:
+
+\color{Blue4}
+***/
+
+texdoc stlog
+su(sex), detail
+su(diab), detail
+su(smoking), detail
+su(age), detail
+su(ldl), detail
+su(outcome), detail
+texdoc stlog close
+
+/***
+\color{black}
+
+It looks like these variables make sense and there don't appear to be any errors with the data.
+
+But we should check further: let's produce a histogram to check the continuous variables. 
+
 \color{Blue4}
 ***/
 
 texdoc stlog, cmdlog nodo
-cd /home/jimb0w/Downloads/tempauto/
+hist ldl
+hist age
+hist outcome
+export delimited using randomhealthdata.csv, replace
 texdoc stlog close
 
 
-
+reg outcome age diabetes smoking ldl
 /***
 
 \end{document}
@@ -109,17 +166,17 @@ cd /home/jimb0w/Downloads/tempauto/
 ! bibtex auto
 ! pdflatex auto
 
-*erase auto.aux
-*erase auto.log
-*erase auto.out
-*erase auto.toc
-*erase auto.bbl
-*erase auto.blg
+erase auto.aux
+erase auto.log
+erase auto.out
+erase auto.toc
+erase auto.bbl
+erase auto.blg
 
 
 
 ! git init .
-! git add auto.do auto.pdf
+! git add auto.do auto.pdf randomhealthdata.csv
 ! git commit -m "0"
 ! git remote remove origin
 ! git remote add origin https://github.com/jimb0w/automation.git
