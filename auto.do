@@ -209,7 +209,7 @@ Age & median (IQR) & median (IQR) & median (IQR) \\
 LDL-C & median (IQR) & median (IQR) & median (IQR) \\
 Outcome & median (IQR) & median (IQR) & median (IQR) \\
 \hline
-\end{tabular}
+\end{tabular} \\
 Data are presented as N (\%) or median (IQR).
 \end{table}
 
