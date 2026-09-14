@@ -232,7 +232,7 @@ texdoc stlog close
 \color{black}
 
 We can access any one of those statistics and store it for use in our table. 
-(Annoyingly ``tabulate'' doesn't store anything useful, so you have to use the \emph{matcell} option.)
+(Annoyingly \emph{tabulate} doesn't store anything useful, so you have to use the \emph{matcell} option.)
 
 So, let's get all the data we need for our table:
 
