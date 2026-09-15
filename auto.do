@@ -203,14 +203,15 @@ The Table~\ref{exampletable} is what we're aiming for.
 & \multicolumn{1}{c}{Overall} & \multicolumn{2}{c}{Diabetes status} \\
 & & No diabetes & Diabetes \\
 \hline
-Sex & N (\%) & N (\%) & N (\%) \\
+N & N & N & N \\
+Females & N (\%) & N (\%) & N (\%) \\
 Smoking status & N (\%) & N (\%) & N (\%) \\
 Age & median (IQR) & median (IQR) & median (IQR) \\
-LDL-C & median (IQR) & median (IQR) & median (IQR) \\
+LDL-C (mmol/L) & median (IQR) & median (IQR) & median (IQR) \\
 Outcome & median (IQR) & median (IQR) & median (IQR) \\
 \hline
 \end{tabular} \\
-Data are presented as N (\%) or median (IQR).
+Data are presented as N, N (\% of column total), or median (IQR).
 \end{table}
 
 Now that we know what we are aiming for, we need to collect the values. 
@@ -232,16 +233,152 @@ texdoc stlog close
 \color{black}
 
 We can access any one of those statistics and store it for use in our table. 
-(Annoyingly \emph{tabulate} doesn't store anything useful, so you have to use the \emph{matcell} option.)
+Annoyingly \emph{tabulate} doesn't store anything useful, so you have to use the \emph{matcell} option.
 
 So, let's get all the data we need for our table:
 
 \color{Blue4}
 ***/
 
+texdoc stlog, cmdlog
+count
+local a = r(N)
+count if sex == 0
+local b = r(N)
+count if smoking == 1
+local c = r(N)
+su(age), detail
+mat A1 = (r(p50),r(p25),r(p75))
+su(ldl), detail
+mat A2 = (r(p50),r(p25),r(p75))
+su(outcome), detail
+mat A3 = (r(p50),r(p25),r(p75))
+mat B = (0`a',.,. ///
+        \0`b',.,. ///
+        \0`c',.,. ///
+        \A1\A2\A3)
+forval i = 0/1 {
+count if diabetes == `i'
+local a = r(N)
+count if sex == 0 & diabetes == `i'
+local b = r(N)
+count if smoking == 1 & diabetes == `i'
+local c = r(N)
+su(age) if diabetes == `i', detail
+mat A1 = (r(p50),r(p25),r(p75))
+su(ldl) if diabetes == `i', detail
+mat A2 = (r(p50),r(p25),r(p75))
+su(outcome) if diabetes == `i', detail
+mat A3 = (r(p50),r(p25),r(p75))
+mat B`i' = (0`a',.,. ///
+        \0`b',.,. ///
+        \0`c',.,. ///
+        \A1\A2\A3)
+}
+mat C = (B,B0,B1)
+texdoc stlog close
+texdoc stlog
+mat l C
+texdoc stlog close
 
 
-reg outcome age diabetes smoking ldl
+/***
+\color{black}
+
+We have all our results in the matrix, $C$.
+However, they aren't in a presentable format.
+If we were to try and make a table out of this, we would
+have too many decimal places and inconsistent column numbers.
+So, we need to convert the variables to string (essentially text, not number) format
+so that we can manipulate the data into the format we need for our table.
+
+\color{Blue4}
+***/
+
+texdoc stlog, cmdlog nodo
+mkdir CSV
+clear
+svmat C
+gen D1 = C1[1]
+gen D4 = C4[1]
+gen D7 = C7[1]
+gen E1 = 100*C1/D1
+gen E4 = 100*C4/D4
+gen E7 = 100*C7/D7
+tostring C1 C4 C7, gen(A1 A4 A7) force format(%9.0fc)
+tostring _all, replace force format(%9.1f)
+gen A = A1 if _n == 1
+gen B = A4 if _n == 1
+gen C = A7 if _n == 1
+replace A = A1 + " (" + E1 + "\%)" if inrange(_n,2,3)
+replace B = A4 + " (" + E4 + "\%)" if inrange(_n,2,3)
+replace C = A7 + " (" + E7 + "\%)" if inrange(_n,2,3)
+replace A = C1 + " (" + C2 + ", " + C3 + ")" if _n >=4
+replace B = C4 + " (" + C5 + ", " + C6 + ")" if _n >=4
+replace C = C7 + " (" + C8 + ", " + C9 + ")" if _n >=4
+keep A B C
+gen row = ""
+replace row = "N" if _n == 1
+replace row = "Females" if _n == 2
+replace row = "Smoking status" if _n == 3
+replace row = "Age" if _n == 4
+replace row = "LDL-C (mmol/L)" if _n == 5
+replace row = "Outcome" if _n == 6
+order row
+export delimited using CSV/table1.csv, delimiter(":") novarnames replace
+save table1, replace
+texdoc stlog close
+texdoc stlog, nolog
+use table1, clear
+texdoc local nodmoc = B[6]
+texdoc local dmoc = C[6]
+texdoc stlog close
+
+/***
+\color{black}
+
+\clearpage
+We have successfully produced our first table.
+I like to save tables in a CSV subdirectory to make the main folder cleaner. 
+That also makes it easier to bulk save all your results to GitHub.
+
+There are several ways to use tables in a LaTeX document. I use
+$pgfplotstable$ as it allows me to export the file
+to a csv document and then use LaTeX. 
+You could also simply write a TeX table in Stata and export that.
+
+\begin{table}[h!]
+  \begin{center}
+    \caption{Population characteristics.}
+    \label{table1}
+  \pgfplotstabletypeset[
+      multicolumn names,
+      col sep=colon,
+      header=false,
+      string type,
+	  display columns/0/.style={column name=, column type={l}},
+      display columns/1/.style={column name=, column type={r}},
+      display columns/2/.style={column name=No diabetes, column type={r}},
+      display columns/3/.style={column name=Diabetes, column type={r}},
+      every head row/.style={
+        before row={\toprule
+                    & \multicolumn{1}{c}{Overall} & \multicolumn{2}{c}{Diabetes status} \\
+					},
+        after row={\midrule}
+            },
+        every last row/.style={after row=\bottomrule},
+    ]{CSV/table1.csv}
+  \end{center}
+\end{table}
+
+
+text outputs and then on your own commies
+
+\color{Blue4}
+***/
+
+
+
 /***
 
 \end{document}
