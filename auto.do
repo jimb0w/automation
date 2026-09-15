@@ -28,6 +28,8 @@ texdoc stlog close
 \usepackage{pdflscape}
 \usepackage[section]{placeins}
 \usepackage{amssymb}
+\usepackage[superscript,biblabel]{cite}
+
 
 \usepackage{chngcntr}
 \counterwithin{figure}{section}
