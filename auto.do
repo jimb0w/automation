@@ -391,6 +391,7 @@ using results generated automatically.
 
 
 /***
+\color{black}
 \clearpage
 \section*{References}
 \addcontentsline{toc}{section}{References}
