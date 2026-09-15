@@ -9,6 +9,8 @@ set linesize 100
 
 texdoc stlog, nolog nodo
 cd /home/jimb0w/Downloads/tempauto/
+! rm -r "/home/jimb0w/Downloads/tempauto/Library"
+! git clone https://github.com/jimb0w/Library.git
 texdoc do auto.do
 exit
 texdoc stlog close
@@ -79,6 +81,7 @@ Monash University, Melbourne, Australia \\
 \section{Data cleaning}
 
 Document everything! Say what you're going to do, do it, then comment on it.
+My latest example is in this reference \cite{MortonAth2025} or at this \href{link}{https://github.com/jimb0w/LPAtesting}.
 
 For example: I'm going to create a random health dataset with the following variables:
 \begin{itemize}
@@ -374,6 +377,7 @@ You could also simply write a TeX table in Stata and export that.
 
 We can see from the table that the Outcome seems to be higher in people
 with diabetes (median (IQR): `dmoc') than without diabetes (median (IQR): `nodmoc').
+
 
 Okay, now it's your turn.
 Use these tools to run a linear regression analysis comparing
