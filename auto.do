@@ -91,6 +91,20 @@ Monash University, Melbourne, Australia \\
 \tableofcontents
 
 \clearpage
+\section{Introduction}
+
+The premise of this seminar is that you should automate everything you can.
+Not only are there huge efficiency advantages, it's also the only
+way to ensure your work is truly reproducible.
+
+This document and the associated Stata do file will hopefully
+provide some familiarity with the tools to allow you to automate most of the work that you do.
+
+We're using two things that you need in addition to Stata:
+the texdoc package, and a LaTeX compiler. 
+
+
+\clearpage
 \section{Data cleaning}
 
 Document everything! Say what you're going to do, do it, then comment on it.
