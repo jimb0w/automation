@@ -26,14 +26,17 @@ texdoc stlog close
 \bibliographystyle{unsrt}
 \usepackage{natbib}
 \usepackage{pdflscape}
-\usepackage[section]{placeins}
+\usepackage{amsmath}
 \usepackage{amssymb}
 \usepackage[superscript,biblabel]{cite}
-
+\usepackage{longtable}
 
 \usepackage{chngcntr}
 \counterwithin{figure}{section}
 \counterwithin{table}{section}
+
+\usepackage[section]{placeins}
+\usepackage{subcaption}
 
 \usepackage{multirow}
 \usepackage{booktabs}
@@ -42,8 +45,16 @@ texdoc stlog close
   \begin{tabular}[#1]{@{}c@{}}#2\end{tabular}}
 \newcommand{\thedate}{\today}
 
+\renewcommand{\thefootnote}{\roman{footnote}}
 \usepackage{pgfplotstable}
+
 \renewcommand{\bibsection}{}
+\makeatletter
+\renewcommand\@biblabel[1]{	#1.}
+\makeatother
+
+\hypersetup{pdfborder = {0 0 0}}
+
 
 \begin{document}
 
