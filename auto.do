@@ -397,7 +397,7 @@ using results generated automatically.
 \clearpage
 \section*{References}
 \addcontentsline{toc}{section}{References}
-\bibliography{/home/jimb0w/Documents/HFCEA/Library/Library.bib}
+\bibliography{/home/jimb0w/Downloads/tempauto/Library/Library.bib}
 
 \end{document}
 ***/
