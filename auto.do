@@ -81,7 +81,7 @@ Monash University, Melbourne, Australia \\
 \section{Data cleaning}
 
 Document everything! Say what you're going to do, do it, then comment on it.
-My latest example is in this reference \cite{MortonAth2025} or at this \href{link}{https://github.com/jimb0w/LPAtesting}.
+My latest example is in this reference \cite{MortonAth2025} or at this \href{https://github.com/jimb0w/LPAtesting}{link}.
 
 For example: I'm going to create a random health dataset with the following variables:
 \begin{itemize}
@@ -391,6 +391,10 @@ using results generated automatically.
 
 
 /***
+\clearpage
+\section*{References}
+\addcontentsline{toc}{section}{References}
+\bibliography{/home/jimb0w/Documents/HFCEA/Library/Library.bib}
 
 \end{document}
 ***/
