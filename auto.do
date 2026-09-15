@@ -201,7 +201,7 @@ The Table~\ref{exampletable} is what we're aiming for.
 	\begin{tabular}{lrrr}
 \hline
 & \multicolumn{1}{c}{Overall} & \multicolumn{2}{c}{Diabetes status} \\
-Outcome & & No diabetes & Diabetes \\
+& & No diabetes & Diabetes \\
 \hline
 Sex & N (\%) & N (\%) & N (\%) \\
 Smoking status & N (\%) & N (\%) & N (\%) \\
