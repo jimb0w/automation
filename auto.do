@@ -373,7 +373,13 @@ You could also simply write a TeX table in Stata and export that.
 
 
 We can see from the table that the Outcome seems to be higher in people
-with diabetes (median: `dmoc') than without diabetes (median: `nodmoc').
+with diabetes (median (IQR): `dmoc') than without diabetes (median (IQR): `nodmoc').
+
+Okay, now it's your turn.
+Use these tools to run a linear regression analysis comparing
+each explanatory variable with the outcome, show the results in a table
+and a figure that is completely automatic. Then comment on the results in the text
+using results generated automatically. 
 
 \color{Blue4}
 ***/
