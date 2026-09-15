@@ -372,7 +372,8 @@ You could also simply write a TeX table in Stata and export that.
 \end{table}
 
 
-text outputs and then on your own commies
+We can see from the table that the Outcome seems to be higher in people
+with diabetes (median: `dmoc') than without diabetes (median: `nodmoc').
 
 \color{Blue4}
 ***/
