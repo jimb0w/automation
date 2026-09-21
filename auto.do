@@ -108,7 +108,7 @@ the texdoc package, and a LaTeX compiler.
 \section{Data cleaning}
 
 Document everything! Say what you're going to do, do it, then comment on it.
-My latest example is in this reference \cite{MortonAth2025} or at this \href{https://github.com/jimb0w/LPAtesting}{link}.
+My latest example is in this reference \cite{MortonAth2025} or at \color{blue}\href{https://github.com/jimb0w/LPAtesting}{this link}\color{black}.
 
 For example: I'm going to create a random health dataset with the following variables:
 \begin{itemize}
