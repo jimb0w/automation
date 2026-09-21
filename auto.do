@@ -69,7 +69,7 @@ texdoc stlog close
 \color{black}
 \thedate \\
 \color{blue}
-https://github.com/jimb0w/automation \\
+\href{https://github.com/jimb0w/automation}{https://github.com/jimb0w/automation} \\
 \color{black}
        \vfill
     \end{flushright}
