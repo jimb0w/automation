@@ -8,8 +8,8 @@ set linesize 100
 *copy "http://www.stata-journal.com/production/sjlatex/stata.sty" stata.sty
 
 texdoc stlog, nolog nodo
-cd /home/jimb0w/Downloads/tempauto/
-! rm -r "/home/jimb0w/Downloads/tempauto/Library"
+cd /home/jimb0w/Documents/PRES/auto/
+! rm -r "/home/jimb0w/Documents/PRES/auto/Library"
 ! git clone https://github.com/jimb0w/Library.git
 texdoc do auto.do
 exit
@@ -126,7 +126,7 @@ As so:
 ***/
 
 texdoc stlog, cmdlog
-cd /home/jimb0w/Downloads/tempauto/
+cd /home/jimb0w/Documents/PRES/auto/
 clear
 set obs 20000
 set seed 1312
@@ -430,7 +430,7 @@ using results generated automatically.
 texdoc close
 
 
-cd /home/jimb0w/Downloads/tempauto/
+cd /home/jimb0w/Documents/PRES/auto/
 
 
 ! pdflatex auto
