@@ -181,7 +181,6 @@ graph save GPH/Outcome_hist, replace
 graph combine ///
 GPH/LDL_hist.gph ///
 GPH/Age_hist.gph ///
-GPH/Outcome_hist.gph ///
 , cols(1) altshrink xsize(3)
 graph export GPH/distcheck.pdf, as(pdf) replace
 texdoc stlog close
